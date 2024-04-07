@@ -131,6 +131,7 @@ local autopilotKey = lib.addKeybind({
     onReleased = function(self)
         if not cache.vehicle then return end
         if GetPedInVehicleSeat(cache.vehicle, -1) ~= cache.ped then return end
+        if not isAllowedClass(GetVehicleClass(cache.vehicle)) then return end
 
         if IsWaypointActive() then
             toggleAutoPilot()

@@ -38,3 +38,13 @@ function getWaypointCoords()
     local x, y, z = waypointCoords.x, waypointCoords.y, waypointCoords.z
     return vec3(x,y,z)
 end
+
+-- Checks if Vehicle is Allowed Class --
+function isAllowedClass(class)
+    for x = 1, #config.allowedClasses do
+        if class == config.allowedClasses[x] then
+            return true
+        end
+    end
+    return false
+end
