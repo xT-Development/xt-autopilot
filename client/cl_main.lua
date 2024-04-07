@@ -98,7 +98,7 @@ end
 -- Autopilot Toggle --
 local function toggleAutoPilot()
     if not autoPilotActive then
-        local speedInput = lib.inputDialog('Autopilot Speed', {
+        local speedInput = lib.inputDialog('Autopilot Controls', {
             { type = 'number', label = ('Set Max Speed (%s)'):format(speedType), required = true },
             { type = 'select', label = 'Select Drivestyle', options = config.driveStyles, required = true },
         }) if not speedInput then return end
@@ -130,15 +130,12 @@ local autopilotKey = lib.addKeybind({
     defaultKey = config.keybind,
     onReleased = function(self)
         if not cache.vehicle then return end
+        if GetPedInVehicleSeat(cache.vehicle, -1) ~= cache.ped then return end
 
-        if GetPedInVehicleSeat(cache.vehicle, -1) == cache.ped then
-            if IsWaypointActive() then
-                toggleAutoPilot()
-            else
-                lib.notify({ title = 'No waypoint active!', type = 'error' })
-            end
+        if IsWaypointActive() then
+            toggleAutoPilot()
         else
-            lib.notify({ title = 'You are not driving!', type = 'error' })
+            lib.notify({ title = 'No waypoint active!', type = 'error' })
         end
     end
 })
